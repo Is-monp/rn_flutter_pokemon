@@ -1,5 +1,5 @@
-import AuthFlow from "@/src/AuthFlow";
 import { DIProvider } from "@/src/core/di/DIProvider";
+import AuthFlow from "@/src/main";
 
 import { AuthProvider } from "@/src/features/auth/presentation/context/authContext";
 import { NavigationContainer } from "@react-navigation/native";
