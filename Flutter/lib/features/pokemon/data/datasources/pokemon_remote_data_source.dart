@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/pokemon_api_page.dart';
@@ -20,8 +20,12 @@ class PokemonRemoteDataSource {
             const {'limit': '20', 'offset': '0'},
           )
         : Uri.parse(nextUrl);
-
+    final stopwatch = Stopwatch()..start();
     final response = await httpClient.get(uri);
+    stopwatch.stop();
+
+    debugPrint('[API] fetchPage → ${stopwatch.elapsedMilliseconds}ms | URL: $uri');
+
 
     if (response.statusCode != 200) {
       throw Exception('No se pudo consultar PokeAPI (${response.statusCode})');
