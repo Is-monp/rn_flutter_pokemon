@@ -104,12 +104,12 @@ Datos resumidos:\
 > recepción de la respuesta, no a una latencia de red distinta.
 >
 > Flutter:
-
-<img src="media/image15.png" style="width:4.94631in;height:1.08597in" />
-
-React:
-
-<img src="media/image9.png" style="width:4.69665in;height:1.23438in" />
+>
+> <img src="media/image15.png" style="width:4.94631in;height:1.08597in" />
+>
+> React:
+>
+> <img src="media/image9.png" style="width:4.69665in;height:1.23438in" />
 
 3.  Fluidez de la interfaz:
 
@@ -174,23 +174,23 @@ React:
 
 **Conclusión**
 
-Desarrollar la misma aplicación en Flutter y React Native (Expo)
-confirmó que ninguna plataforma domina todas las métricas; los
-resultados dependen del caso de uso, la configuración del build y el
-hardware. Flutter destacó en consistencia: frames uniformes bajo el
-presupuesto de 60 FPS, menor tiempo de respuesta medido, arranque más
-rápido (1,47 s vs 2,30 s) y compilación release más ágil (4,5 min vs
-15,5 min). Su arquitectura AOT autocontenida explica estas ventajas,
-aunque también su mayor tamaño de APK (48,1 MB vs 38,4 MB). El hot
-reload por debajo de 1 segundo también favoreció la velocidad de
-iteración durante el desarrollo. React Native con Expo compensa con un
-binario más liviano, builds incrementales rápidos (66 s con caché) y su
-integración natural con componentes del sistema. Sin embargo, el
-overhead del hilo de JavaScript se tradujo en mayor latencia de red
-medida y scroll menos uniforme en listas largas (18–48 FPS). En
-conclusión, cada framework cuenta con fortalezas, Flutter es preferible
-cuando la fluidez, la predictibilidad del rendimiento y el ciclo de
-desarrollo ágil son prioritarios, especialmente en dispositivos de gama
-media. React Native con Expo sigue siendo viable cuando el tamaño del
-binario es una restricción, el equipo domina el ecosistema React, o se
-requiere integración profunda con módulos nativos existentes.
+> Desarrollar la misma aplicación en Flutter y React Native (Expo)
+> confirmó que ninguna plataforma domina todas las métricas; los
+> resultados dependen del caso de uso, la configuración del build y el
+> hardware. Flutter destacó en consistencia: frames uniformes bajo el
+> presupuesto de 60 FPS, menor tiempo de respuesta medido, arranque más
+> rápido (1,47 s vs 2,30 s) y compilación release más ágil (4,5 min vs
+> 15,5 min). Su arquitectura AOT autocontenida explica estas ventajas,
+> aunque también su mayor tamaño de APK (48,1 MB vs 38,4 MB). El hot
+> reload por debajo de 1 segundo también favoreció la velocidad de
+> iteración durante el desarrollo. React Native con Expo compensa con un
+> binario más liviano, builds incrementales rápidos (66 s con caché) y su
+> integración natural con componentes del sistema. Sin embargo, el
+> overhead del hilo de JavaScript se tradujo en mayor latencia de red
+> medida y scroll menos uniforme en listas largas (18–48 FPS). En
+> conclusión, cada framework cuenta con fortalezas, Flutter es preferible
+> cuando la fluidez, la predictibilidad del rendimiento y el ciclo de
+> desarrollo ágil son prioritarios, especialmente en dispositivos de gama
+> media. React Native con Expo sigue siendo viable cuando el tamaño del
+> binario es una restricción, el equipo domina el ecosistema React, o se
+> requiere integración profunda con módulos nativos existentes.
