@@ -104,11 +104,11 @@ Datos resumidos:\
 > recepción de la respuesta, no a una latencia de red distinta.
 >
 > Flutter:
->
+> 
 > <img src="media/image15.png" style="width:4.94631in;height:1.08597in" />
->
+> 
 > React:
->
+> 
 > <img src="media/image9.png" style="width:4.69665in;height:1.23438in" />
 
 3.  Fluidez de la interfaz:
