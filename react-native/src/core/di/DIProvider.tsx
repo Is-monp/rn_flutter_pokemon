@@ -2,11 +2,9 @@ import React, { createContext, useContext, useMemo } from "react";
 
 import { TOKENS } from "./tokens";
 
-import { AuthRemoteDataSourceImpl } from "@/src/features/auth/data/datasources/AuthRemoteDataSourceImp";
-import { AuthRepositoryImpl } from "@/src/features/auth/data/repositories/AuthRepositoryImpl";
-import { LocalProductCacheSource } from "@/src/features/products/data/datasources/local/LocalProductCacheSource";
-import { ProductRemoteDataSourceImp } from "@/src/features/products/data/datasources/ProductRemoteDataSourceImp";
-import { ProductRepositoryImpl } from "@/src/features/products/data/repositories/ProductRepositoryImpl";
+import { PokemonMemoryDataSource } from "@/src/features/pokemon/data/datasources/pokemon_memory_data_source";
+import { PokemonRemoteDataSource } from "@/src/features/pokemon/data/datasources/pokemon_remote_data_source";
+import { PokemonRepositoryImpl } from "@/src/features/pokemon/data/repositories/pokemon_repository_impl";
 import { Container } from "./container";
 const DIContext = createContext<Container | null>(null);
 
@@ -15,21 +13,13 @@ export function DIProvider({ children }: { children: React.ReactNode }) {
     const container = useMemo(() => {
         const c = new Container();
 
-        const authDS = new AuthRemoteDataSourceImpl();
-        const authRepo = new AuthRepositoryImpl(authDS);
+        const pokemonRemoteDS = new PokemonRemoteDataSource();
+        const pokemonMemoryDS = new PokemonMemoryDataSource();
+        const pokemonRepo = new PokemonRepositoryImpl(pokemonRemoteDS, pokemonMemoryDS);
 
-        c.register(TOKENS.AuthRemoteDS, authDS)
-            .register(TOKENS.AuthRepo, authRepo);
-
-        const localCacheDS = new LocalProductCacheSource();
-        const remoteDS = new ProductRemoteDataSourceImp(authDS);
-        const productRepo = new ProductRepositoryImpl(remoteDS, localCacheDS);
-
-        c.register(TOKENS.ProductRemoteDS, remoteDS).
-            register(TOKENS.LocalProductCacheDS, localCacheDS).
-            register(TOKENS.ProductRepo, productRepo);
-
-
+        c.register(TOKENS.PokemonRemoteDS, pokemonRemoteDS)
+            .register(TOKENS.PokemonMemoryDS, pokemonMemoryDS)
+            .register(TOKENS.PokemonRepo, pokemonRepo);
 
         return c;
     }, []);

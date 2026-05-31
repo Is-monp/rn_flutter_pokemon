@@ -1,7 +1,5 @@
 import React, {
-    useEffect,
     useRef,
-    useState,
 } from "react";
 
 import {
@@ -20,49 +18,40 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { PokemonEntry } from "../../domain/entities/pokemon_entry";
-import { PokemonController } from "../controllers/pokemon_controller";
+import { usePokemon } from "../context/pokemonContext";
 
 type PokemonListPageProps = {
-  controller: PokemonController;
   navigation: any;
 };
 
 export function PokemonListPage({
-  controller,
   navigation,
 }: PokemonListPageProps) {
-  const flatListRef =
-    useRef<FlatList<PokemonEntry>>(null);
+  const {
+    items,
+    isLoading,
+    isLoadingMore,
+    hasMore,
+    loadMore,
+    refresh,
+  } = usePokemon();
 
-  const [, forceUpdate] = useState(0);
+  const flatListRef = useRef<FlatList<PokemonEntry>>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      forceUpdate((value) => value + 1);
-    }, 250);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleScroll = ({
-    nativeEvent,
-  }: any) => {
-    const threshold =
-      nativeEvent.contentSize.height * 0.8;
+  const handleScroll = ({ nativeEvent }: any) => {
+    const threshold = nativeEvent.contentSize.height * 0.8;
 
     if (
       nativeEvent.contentOffset.y +
         nativeEvent.layoutMeasurement.height >=
       threshold
     ) {
-      controller.loadMore();
+      loadMore();
     }
   };
 
   const renderFooter = () => {
-    if (!controller.isLoadingMore) {
-      return null;
-    }
+    if (!isLoadingMore) return null;
 
     return (
       <View style={styles.footerLoader}>
@@ -71,10 +60,7 @@ export function PokemonListPage({
     );
   };
 
-  if (
-    controller.isLoading &&
-    controller.items.length === 0
-  ) {
+  if (isLoading && items.length === 0) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#e53935" />
@@ -84,12 +70,9 @@ export function PokemonListPage({
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopBanner
-        totalItems={controller.items.length}
-        hasMore={controller.hasMore}
-      />
+      <TopBanner totalItems={items.length} hasMore={hasMore} />
 
-      {controller.items.length === 0 ? (
+      {items.length === 0 ? (
         <FlatList
           data={[]}
           renderItem={null as any}
@@ -102,45 +85,35 @@ export function PokemonListPage({
           }
           refreshControl={
             <RefreshControl
-              refreshing={controller.isLoading}
-              onRefresh={() =>
-                controller.refreshVisibleList()
-              }
+              refreshing={isLoading}
+              onRefresh={refresh}
             />
           }
         />
       ) : (
         <FlatList
           ref={flatListRef}
-          data={controller.items}
+          data={items}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContent}
           onScroll={handleScroll}
           scrollEventThrottle={16}
           refreshControl={
             <RefreshControl
-              refreshing={controller.isLoading}
-              onRefresh={() =>
-                controller.refreshVisibleList()
-              }
+              refreshing={isLoading}
+              onRefresh={refresh}
             />
           }
           ListFooterComponent={renderFooter}
           renderItem={({ item }) => (
             <PokemonCard
               pokemon={item}
-              onTap={() => {
-                navigation.navigate(
-                  "PokemonDetail",
-                  { pokemon: item },
-                );
-              }}
-              onEdit={() => {
-                navigation.navigate(
-                  "PokemonForm",
-                  { pokemon: item },
-                );
-              }}
+              onTap={() =>
+                navigation.navigate("PokemonDetail", { pokemon: item })
+              }
+              onEdit={() =>
+                navigation.navigate("PokemonForm", { pokemon: item })
+              }
             />
           )}
         />
@@ -149,9 +122,7 @@ export function PokemonListPage({
       <TouchableOpacity
         style={styles.fab}
         activeOpacity={0.85}
-        onPress={() => {
-          navigation.navigate("PokemonForm");
-        }}
+        onPress={() => navigation.navigate("PokemonForm")}
       >
         <Ionicons name="add" size={20} color="#ffffff" />
         <Text style={styles.fabText}>Crear</Text>

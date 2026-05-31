@@ -4,5 +4,7 @@ export const TOKENS = {
   LocalProductCacheDS: Symbol("LocalProductCacheDS"),
   ProductRemoteDS: Symbol("ProductRemoteDS"),
   ProductRepo: Symbol("ProductRepo"),
-  // Add Product tokens if you want to DI those too...
+  PokemonRemoteDS: Symbol("PokemonRemoteDS"),
+  PokemonMemoryDS: Symbol("PokemonMemoryDS"),
+  PokemonRepo: Symbol("PokemonRepo"),
 } as const;

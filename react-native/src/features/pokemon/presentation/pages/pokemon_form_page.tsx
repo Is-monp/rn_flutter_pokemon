@@ -11,19 +11,18 @@ import {
 } from "react-native";
 
 import { PokemonEntry } from "../../domain/entities/pokemon_entry";
-import { PokemonController } from "../controllers/pokemon_controller";
+import { usePokemon } from "../context/pokemonContext";
 
 type PokemonFormPageProps = {
   pokemon?: PokemonEntry | null;
-  controller: PokemonController;
   navigation: any;
 };
 
 export function PokemonFormPage({
   pokemon,
-  controller,
   navigation,
 }: PokemonFormPageProps) {
+  const { createPokemon, updatePokemon } = usePokemon();
   const isEditing = useMemo(
     () => pokemon != null,
     [pokemon],
@@ -52,7 +51,7 @@ export function PokemonFormPage({
 
     try {
       if (isEditing && pokemon) {
-        await controller.updatePokemon(
+        await updatePokemon(
           pokemon.copyWith({
             name: trimmedName,
             url:
@@ -63,7 +62,7 @@ export function PokemonFormPage({
           }),
         );
       } else {
-        await controller.createPokemon({
+        await createPokemon({
           name: trimmedName,
           url: trimmedUrl,
         });

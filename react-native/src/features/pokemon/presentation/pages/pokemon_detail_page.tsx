@@ -9,21 +9,21 @@ import {
 } from "react-native";
 
 import { PokemonEntry } from "../../domain/entities/pokemon_entry";
-import { PokemonController } from "../controllers/pokemon_controller";
+import { usePokemon } from "../context/pokemonContext";
 
 type PokemonDetailPageProps = {
   pokemon: PokemonEntry;
-  controller: PokemonController;
   navigation: any;
 };
 
 export function PokemonDetailPage({
   pokemon,
-  controller,
   navigation,
 }: PokemonDetailPageProps) {
+  const { deletePokemon } = usePokemon();
+
   const handleDelete = async () => {
-    await controller.deletePokemon(pokemon.id);
+    await deletePokemon(pokemon.id);
     navigation.goBack();
   };
 
