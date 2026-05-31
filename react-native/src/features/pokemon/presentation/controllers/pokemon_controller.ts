@@ -2,6 +2,8 @@ import { PokemonCollection } from "../../domain/entities/pokemon_collection";
 import { PokemonEntry } from "../../domain/entities/pokemon_entry";
 import { PokemonRepository } from "../../domain/repositories/pokemon_repository";
 
+//esto no se usa, pero lo dejo para mostrar una alternativa a usar el context
+//pero ta mal
 export class PokemonController {
   constructor(
     private readonly repository: PokemonRepository,
